@@ -1,0 +1,340 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"ProductType": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					},
+					"category": {
+						"type": "string"
+					},
+					"stock": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"name",
+					"price",
+					"category",
+					"stock"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ProductResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"data": {
+						"$ref": "#/components/schemas/ProductType"
+					}
+				},
+				"required": [
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ProductCreateRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					},
+					"category": {
+						"type": "string"
+					},
+					"stock": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"name",
+					"price",
+					"category",
+					"stock"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginationType": {
+				"properties": {
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/ProductType"
+						},
+						"type": "array"
+					},
+					"totalItem": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalPage": {
+						"type": "number",
+						"format": "double"
+					},
+					"currentPage": {
+						"type": "number",
+						"format": "double"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"skip": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"data",
+					"totalItem",
+					"totalPage",
+					"currentPage",
+					"limit",
+					"skip"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"QueryType": {
+				"properties": {
+					"filter": {
+						"type": "string"
+					},
+					"sort": {
+						"type": "string"
+					},
+					"limit": {
+						"anyOf": [
+							{
+								"type": "number",
+								"format": "double"
+							},
+							{
+								"type": "number",
+								"enum": [
+									0
+								]
+							}
+						]
+					},
+					"page": {
+						"anyOf": [
+							{
+								"type": "number",
+								"format": "double"
+							},
+							{
+								"type": "number",
+								"enum": [
+									0
+								]
+							}
+						]
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "tsoa-express-api",
+		"version": "1.0.0",
+		"license": {
+			"name": "MIT"
+		},
+		"contact": {
+			"name": "MyDragon168 ",
+			"email": "cambodiagames3@gmail.com"
+		}
+	},
+	"paths": {
+		"/v1/products": {
+			"post": {
+				"operationId": "CreateItem",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductResponse"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "Created Success"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductCreateRequest"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetAllData",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginationType"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {}
+					}
+				]
+			}
+		},
+		"/v1/products/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductType"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Function",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductType"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductType"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteById",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
